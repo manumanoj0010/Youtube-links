@@ -1,1 +1,1 @@
-[Angular Modal](https://github.com/manumanoj0010/youtube-links/blob/gh-pages/angular-modal.md)
+[Angular Modal](angular-modal.md)
