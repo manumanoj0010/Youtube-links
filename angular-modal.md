@@ -1,3 +1,6 @@
+Angular Modal (Underline)
+=============
+
 ```javascript
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
