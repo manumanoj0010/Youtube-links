@@ -1,37 +1,93 @@
-## Welcome to GitHub Pages
+```javascript
+import { Component, OnInit } from '@angular/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-You can use the [editor on GitHub](https://github.com/manumanoj0010/youtube-links/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+@Component({
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
+})
+export class ModalComponent implements OnInit {
 
-### Markdown
+  closeResult: string;
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+  constructor(private modalService: NgbModal) { }
 
-```markdown
-Syntax highlighted code block
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.  = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
-# Header 1
-## Header 2
-### Header 3
+   private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
 
-- Bulleted
-- List
+  ngOnInit(): void {
+  }
 
-1. Numbered
-2. List
+}
 
-**Bold** and _Italic_ and `Code` text
+````
+```html
+<button class="btn btn-primary" (click)="open(reportmodal)">Open Modal</button>
 
-[Link](url) and ![Image](src)
+<ng-template #reportmodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Patient Report</h4>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="ReportType">Issue</label>
+        <input type="text" class="form-control" name="ReportForm" placeholder="Issue">
+      </div>
+      <div class="form-row mb-1">
+      <div class="col-md-6 form-group">
+        <label for="Type">Type</label>
+        <div>
+          <input type="radio" (click)="OPD_fun()" name="type" value="OPD"> OPD
+          <input type="radio" (click)="IPD_fun()" name="type" value="IPD"> IPD
+        </div>
+      </div>
+      <div *ngIf="IPD_variable" class="col-md-6 form-group">
+        <label for="Discharge">Discharge Date</label>
+        <div class="input-group">
+          <input id="Discharge" class="form-control" placeholder="yyyy-mm-dd" name="Discharge" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="ReportType">Summary</label>
+        <textarea rows="4" cols="50" class="form-control" id="patientAppointmentForm" name="patientAppointmentForm" placeholder="Add Your summary here"></textarea>
+      </div>
+      <label for="Discharge">Lab Reports</label>
+      <button class="ml-2 btn btn-primary">Assign</button>
+      <div class="form-group mt-2">
+        <label for="ReportType">Upload Paper Report (optional)</label>
+        <input type="file" class="form-control" name="ReportUpload">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+  </div>
+
+</ng-template>
+
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/manumanoj0010/youtube-links/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
