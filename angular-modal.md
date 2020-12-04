@@ -1,4 +1,4 @@
-Angular Modal (Underline)
+Angular Modal
 =============
 
 ```javascript
